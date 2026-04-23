@@ -5,6 +5,7 @@ const morgan = require("morgan");
 
 const authRoutes = require("./modules/auth/auth.routes");
 const announcementRoutes = require("./modules/announcements/announcement.routes");
+const routeRoutes = require("./modules/routes/route.routes");
 
 const notFoundMiddleware = require("./middlewares/notFound.middleware");
 const errorMiddleware = require("./middlewares/error.middleware");
@@ -33,6 +34,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/announcements", announcementRoutes);
+app.use("/api/routes", routeRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

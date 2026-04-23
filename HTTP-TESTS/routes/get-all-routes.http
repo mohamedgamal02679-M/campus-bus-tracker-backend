@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:5000
+
+### Get Active Routes Only
+GET {{baseUrl}}/api/routes?isActive=true

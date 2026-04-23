@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:5000
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEwNjQ3NzJkZWZiMjEyMTAxYThhNiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NzY5NjAxNDAsImV4cCI6MTc3NzU2NDk0MH0.qPWneehVsvkh8UjcKRMhkcvo1bpi4CIDTJZCOsJ8YhA
+
+### Create Route
+POST {{baseUrl}}/api/routes
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Main Campus Shuttle",
+  "code": "MCS-01",
+  "startLocationName": "Gate 1",
+  "endLocationName": "Main Library",
+  "description": "Daily shuttle route from Gate 1 to Main Library",
+  "estimatedDurationMinutes": 20,
+  "isActive": true
+}

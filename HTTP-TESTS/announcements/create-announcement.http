@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:5000
-@adminToken = PUT_ADMIN_TOKEN_HERE
+@adminToken = Admin_Token
+
 ### Create General Announcement
 POST {{baseUrl}}/api/announcements
 Content-Type: application/json
