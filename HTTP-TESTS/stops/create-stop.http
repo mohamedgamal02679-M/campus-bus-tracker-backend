@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:5000
+@adminToken = admin_token
+@routeId = route_id
+
+### Create Stop
+POST {{baseUrl}}/api/stops
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "name": "Main Library Stop",
+  "code": "MLS-01",
+  "route": "{{routeId}}",
+  "order": 1,
+  "locationName": "Main Library",
+  "address": "BUE Main Library, El Shorouk",
+  "latitude": 30.123456,
+  "longitude": 31.654321,
+  "displayAddress": "Main Library, The British University in Egypt, El Shorouk, Cairo",
+  "isActive": true
+}

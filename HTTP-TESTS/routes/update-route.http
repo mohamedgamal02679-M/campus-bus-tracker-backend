@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:5000
-@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEwNjQ3NzJkZWZiMjEyMTAxYThhNiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NzY5NjAxNDAsImV4cCI6MTc3NzU2NDk0MH0.qPWneehVsvkh8UjcKRMhkcvo1bpi4CIDTJZCOsJ8YhA
-@routeId = 69ea576bce538e3b0f37be99
+@adminToken = admin_token
+@routeId = route_id
 
 ### Update Route
 PATCH {{baseUrl}}/api/routes/{{routeId}}

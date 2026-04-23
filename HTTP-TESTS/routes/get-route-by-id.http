@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:5000
-@routeId = 69ea576bce538e3b0f37be99
+@routeId = route_id
 
 ### Get Route By Id
 GET {{baseUrl}}/api/routes/{{routeId}}

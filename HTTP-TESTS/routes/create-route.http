@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:5000
-@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEwNjQ3NzJkZWZiMjEyMTAxYThhNiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NzY5NjAxNDAsImV4cCI6MTc3NzU2NDk0MH0.qPWneehVsvkh8UjcKRMhkcvo1bpi4CIDTJZCOsJ8YhA
+@adminToken = admin_token
+
 
 ### Create Route
 POST {{baseUrl}}/api/routes
