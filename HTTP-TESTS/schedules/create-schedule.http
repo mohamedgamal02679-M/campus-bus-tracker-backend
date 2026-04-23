@@ -1,0 +1,22 @@
+@baseUrl = http://localhost:5000
+@adminToken = admin_token
+@routeId = route_id
+@stopId = stop_id
+
+### Create Schedule
+POST {{baseUrl}}/api/schedules
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "route": "{{routeId}}",
+  "stop": "{{stopId}}",
+  "dayOfWeek": "sunday",
+  "departureTime": "08:30",
+  "arrivalTime": "08:45",
+  "direction": "outbound",
+  "scheduleType": "regular",
+  "seasonLabel": "default",
+  "notes": "Morning trip",
+  "isActive": true
+}

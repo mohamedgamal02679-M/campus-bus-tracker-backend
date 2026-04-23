@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:5000
+
+### Get All Schedules
+GET {{baseUrl}}/api/schedules

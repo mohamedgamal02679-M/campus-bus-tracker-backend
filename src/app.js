@@ -7,6 +7,7 @@ const authRoutes = require("./modules/auth/auth.routes");
 const announcementRoutes = require("./modules/announcements/announcement.routes");
 const routeRoutes = require("./modules/routes/route.routes");
 const stopRoutes = require("./modules/stops/stop.routes");
+const scheduleRoutes = require("./modules/schedules/schedule.routes");
 
 const notFoundMiddleware = require("./middlewares/notFound.middleware");
 const errorMiddleware = require("./middlewares/error.middleware");
@@ -37,6 +38,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/announcements", announcementRoutes);
 app.use("/api/routes", routeRoutes);
 app.use("/api/stops", stopRoutes);
+app.use("/api/schedules", scheduleRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
