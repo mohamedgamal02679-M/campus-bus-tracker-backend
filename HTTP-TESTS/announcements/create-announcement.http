@@ -1,0 +1,15 @@
+@baseUrl = http://localhost:5000
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEwNjQ3NzJkZWZiMjEyMTAxYThhNiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NzY5NDcxOTcsImV4cCI6MTc3NzU1MTk5N30.hI9PzQAudcBehK388FDigk05ukYo7jmZRCUeqgYwNzQ
+
+### Create General Announcement
+POST {{baseUrl}}/api/announcements
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "Morning Shuttle Delay",
+  "message": "The morning shuttle may be delayed by 10 minutes due to traffic.",
+  "priority": "high",
+  "scope": "general",
+  "isActive": true
+}
