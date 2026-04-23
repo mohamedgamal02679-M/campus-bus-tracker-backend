@@ -7,5 +7,8 @@ module.exports = {
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   azureMapsKey: process.env.AZURE_MAPS_KEY || "",
   sendGridApiKey: process.env.SENDGRID_API_KEY || "",
-  sendGridFromEmail: process.env.SENDGRID_FROM_EMAIL || ""
+  sendGridFromEmail: process.env.SENDGRID_FROM_EMAIL || "",
+  adminFullName: process.env.ADMIN_FULL_NAME || "Main Admin",
+  adminEmail: process.env.ADMIN_EMAIL || "",
+  adminPassword: process.env.ADMIN_PASSWORD || ""
 };

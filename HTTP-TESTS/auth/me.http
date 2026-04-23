@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:5000
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ZWEwZjYxNzA0ZmYwZDA4OTcwYTM3NCIsImVtYWlsIjoibW9oYW1lZC50ZXN0QGV4YW1wbGUuY29tIiwicm9sZSI6InJpZGVyIiwiaWF0IjoxNzc2OTQ3MDQyLCJleHAiOjE3Nzc1NTE4NDJ9.4vOvaAFAEkLHFWQo2NmgZJMOqZpsEml0mLY6VTmqrvA
+
+
+GET {{baseUrl}}/api/auth/me
+Authorization: Bearer {{token}}
