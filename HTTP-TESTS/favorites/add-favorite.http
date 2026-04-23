@@ -1,0 +1,13 @@
+@baseUrl = http://localhost:5000
+@userToken = user_token
+@stopId = stop_id
+
+### Add Favorite
+POST {{baseUrl}}/api/favorites
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "stop": "{{stopId}}",
+  "notes": "My usual pickup stop"
+}

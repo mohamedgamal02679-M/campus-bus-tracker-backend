@@ -1,0 +1,6 @@
+@baseUrl = http://localhost:5000
+@userToken = user_token
+
+### Get My Favorites
+GET {{baseUrl}}/api/favorites/me
+Authorization: Bearer {{userToken}}
