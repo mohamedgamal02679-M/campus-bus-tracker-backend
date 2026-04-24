@@ -1,6 +1,8 @@
 @baseUrl = http://localhost:5000
 @adminToken = admin_token
 
-### Get All Operation Logs
-GET {{baseUrl}}/api/operation-logs
+@logId = log_id
+
+### Get Operation Log By Id
+GET {{baseUrl}}/api/operation-logs/{{logId}}
 Authorization: Bearer {{adminToken}}

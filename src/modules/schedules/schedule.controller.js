@@ -8,8 +8,13 @@ const {
   deleteSchedule
 } = require("./schedule.service");
 
+const buildRequestMeta = (req) => ({
+  ipAddress: req.ip || "",
+  userAgent: req.get("user-agent") || ""
+});
+
 const create = asyncHandler(async (req, res) => {
-  const result = await createSchedule(req.body, req.user);
+  const result = await createSchedule(req.body, req.user, buildRequestMeta(req));
 
   return res
     .status(201)
@@ -33,7 +38,7 @@ const getById = asyncHandler(async (req, res) => {
 });
 
 const update = asyncHandler(async (req, res) => {
-  const result = await updateSchedule(req.params.id, req.body);
+  const result = await updateSchedule(req.params.id, req.body, req.user, buildRequestMeta(req));
 
   return res
     .status(200)
@@ -41,7 +46,7 @@ const update = asyncHandler(async (req, res) => {
 });
 
 const remove = asyncHandler(async (req, res) => {
-  const result = await deleteSchedule(req.params.id);
+  const result = await deleteSchedule(req.params.id, req.user, buildRequestMeta(req));
 
   return res
     .status(200)

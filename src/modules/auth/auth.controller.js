@@ -6,8 +6,13 @@ const {
   getCurrentUser
 } = require("./auth.service");
 
+const buildRequestMeta = (req) => ({
+  ipAddress: req.ip || "",
+  userAgent: req.get("user-agent") || ""
+});
+
 const register = asyncHandler(async (req, res) => {
-  const result = await registerUser(req.body);
+  const result = await registerUser(req.body, buildRequestMeta(req));
 
   return res
     .status(201)
@@ -15,7 +20,7 @@ const register = asyncHandler(async (req, res) => {
 });
 
 const login = asyncHandler(async (req, res) => {
-  const result = await loginUser(req.body);
+  const result = await loginUser(req.body, buildRequestMeta(req));
 
   return res
     .status(200)

@@ -1,6 +1,7 @@
 const Stop = require("./stop.model");
 const Route = require("../routes/route.model");
 const ApiError = require("../../utils/apiError");
+const { createOperationLog } = require("../operation-logs/operationLog.service");
 
 
 const resolveStopCoordinates = async (payload, existingStop = null) => {
@@ -30,21 +31,7 @@ const resolveStopCoordinates = async (payload, existingStop = null) => {
   }
 
   /*
-    هنا مكان Nominatim بعدين، مثال:
-    const geocoded = await geocodeWithNominatim({
-      locationName: payload.locationName,
-      address: payload.address
-    });
-
-    return {
-      latitude: geocoded.latitude,
-      longitude: geocoded.longitude,
-      displayAddress: geocoded.displayAddress,
-      geocodingSource: "nominatim",
-      osmPlaceId: geocoded.osmPlaceId,
-      osmType: geocoded.osmType,
-      osmId: geocoded.osmId
-    };
+    هنا مكان Nominatim بعدين
   */
 
   if (existingStop) {
@@ -65,10 +52,24 @@ const resolveStopCoordinates = async (payload, existingStop = null) => {
   );
 };
 
-const createStop = async (payload, currentUser) => {
+const createStop = async (payload, currentUser, requestMeta = {}) => {
+  const { ipAddress = "", userAgent = "" } = requestMeta;
+
   const route = await Route.findById(payload.route);
 
   if (!route) {
+    await createOperationLog({
+      actor: currentUser.id,
+      actorRole: currentUser.role,
+      action: "create",
+      entityType: "stop",
+      entityId: null,
+      details: `Failed to create stop ${payload.name || ""}: route not found`,
+      status: "failed",
+      ipAddress,
+      userAgent
+    });
+
     throw new ApiError(404, "Route not found");
   }
 
@@ -78,6 +79,18 @@ const createStop = async (payload, currentUser) => {
     });
 
     if (existingCode) {
+      await createOperationLog({
+        actor: currentUser.id,
+        actorRole: currentUser.role,
+        action: "create",
+        entityType: "stop",
+        entityId: null,
+        details: `Failed to create stop ${payload.name || ""}: stop code ${payload.code.toUpperCase()} already exists`,
+        status: "failed",
+        ipAddress,
+        userAgent
+      });
+
       throw new ApiError(409, "Stop code already exists");
     }
   }
@@ -88,6 +101,18 @@ const createStop = async (payload, currentUser) => {
   });
 
   if (existingOrder) {
+    await createOperationLog({
+      actor: currentUser.id,
+      actorRole: currentUser.role,
+      action: "create",
+      entityType: "stop",
+      entityId: null,
+      details: `Failed to create stop ${payload.name || ""}: order ${payload.order} already exists in route ${route.code}`,
+      status: "failed",
+      ipAddress,
+      userAgent
+    });
+
     throw new ApiError(
       409,
       "A stop with the same order already exists in this route"
@@ -112,6 +137,18 @@ const createStop = async (payload, currentUser) => {
     osmId: coordinates.osmId,
     isActive: payload.isActive !== undefined ? payload.isActive : true,
     createdBy: currentUser.id
+  });
+
+  await createOperationLog({
+    actor: currentUser.id,
+    actorRole: currentUser.role,
+    action: "create",
+    entityType: "stop",
+    entityId: stop._id,
+    details: `Created stop ${stop.name} successfully in route ${route.code}`,
+    status: "success",
+    ipAddress,
+    userAgent
   });
 
   return await Stop.findById(stop._id)
@@ -162,22 +199,52 @@ const getStopById = async (stopId) => {
   return stop;
 };
 
-const updateStop = async (stopId, payload) => {
+const updateStop = async (stopId, payload, currentUser, requestMeta = {}) => {
+  const { ipAddress = "", userAgent = "" } = requestMeta;
+
   const stop = await Stop.findById(stopId);
 
   if (!stop) {
+    await createOperationLog({
+      actor: currentUser.id,
+      actorRole: currentUser.role,
+      action: "update",
+      entityType: "stop",
+      entityId: null,
+      details: `Failed to update stop ${stopId}: stop not found`,
+      status: "failed",
+      ipAddress,
+      userAgent
+    });
+
     throw new ApiError(404, "Stop not found");
   }
 
   const targetRouteId =
     payload.route !== undefined ? payload.route : stop.route.toString();
 
+  let targetRouteCode = "";
+
   if (payload.route !== undefined) {
     const route = await Route.findById(payload.route);
 
     if (!route) {
+      await createOperationLog({
+        actor: currentUser.id,
+        actorRole: currentUser.role,
+        action: "update",
+        entityType: "stop",
+        entityId: stop._id,
+        details: `Failed to update stop ${stop.name}: target route not found`,
+        status: "failed",
+        ipAddress,
+        userAgent
+      });
+
       throw new ApiError(404, "Route not found");
     }
+
+    targetRouteCode = route.code;
   }
 
   if (payload.code !== undefined && payload.code !== "") {
@@ -187,6 +254,18 @@ const updateStop = async (stopId, payload) => {
     });
 
     if (existingCode) {
+      await createOperationLog({
+        actor: currentUser.id,
+        actorRole: currentUser.role,
+        action: "update",
+        entityType: "stop",
+        entityId: stop._id,
+        details: `Failed to update stop ${stop.name}: target code ${payload.code.toUpperCase()} already exists`,
+        status: "failed",
+        ipAddress,
+        userAgent
+      });
+
       throw new ApiError(409, "Stop code already exists");
     }
   }
@@ -200,6 +279,18 @@ const updateStop = async (stopId, payload) => {
   });
 
   if (existingOrder) {
+    await createOperationLog({
+      actor: currentUser.id,
+      actorRole: currentUser.role,
+      action: "update",
+      entityType: "stop",
+      entityId: stop._id,
+      details: `Failed to update stop ${stop.name}: order ${targetOrder} already exists in target route`,
+      status: "failed",
+      ipAddress,
+      userAgent
+    });
+
     throw new ApiError(
       409,
       "A stop with the same order already exists in this route"
@@ -229,23 +320,68 @@ const updateStop = async (stopId, payload) => {
 
   await stop.save();
 
+  await createOperationLog({
+    actor: currentUser.id,
+    actorRole: currentUser.role,
+    action: "update",
+    entityType: "stop",
+    entityId: stop._id,
+    details: `Updated stop ${stop.name} successfully${targetRouteCode ? ` in route ${targetRouteCode}` : ""}`,
+    status: "success",
+    ipAddress,
+    userAgent
+  });
+
   return await Stop.findById(stop._id)
     .populate("route", "name code startLocationName endLocationName isActive")
     .populate("createdBy", "fullName email role");
 };
 
-const deleteStop = async (stopId) => {
-  const stop = await Stop.findById(stopId);
+const deleteStop = async (stopId, currentUser, requestMeta = {}) => {
+  const { ipAddress = "", userAgent = "" } = requestMeta;
+
+  const stop = await Stop.findById(stopId).populate(
+    "route",
+    "name code startLocationName endLocationName isActive"
+  );
 
   if (!stop) {
+    await createOperationLog({
+      actor: currentUser.id,
+      actorRole: currentUser.role,
+      action: "delete",
+      entityType: "stop",
+      entityId: null,
+      details: `Failed to delete stop ${stopId}: stop not found`,
+      status: "failed",
+      ipAddress,
+      userAgent
+    });
+
     throw new ApiError(404, "Stop not found");
   }
 
+  const deletedStopId = stop._id;
+  const deletedStopName = stop.name;
+  const routeCode = stop.route?.code || "";
+
   await stop.deleteOne();
 
+  await createOperationLog({
+    actor: currentUser.id,
+    actorRole: currentUser.role,
+    action: "delete",
+    entityType: "stop",
+    entityId: deletedStopId,
+    details: `Deleted stop ${deletedStopName} successfully${routeCode ? ` from route ${routeCode}` : ""}`,
+    status: "success",
+    ipAddress,
+    userAgent
+  });
+
   return {
-    id: stop._id,
-    name: stop.name,
+    id: deletedStopId,
+    name: deletedStopName,
     code: stop.code
   };
 };

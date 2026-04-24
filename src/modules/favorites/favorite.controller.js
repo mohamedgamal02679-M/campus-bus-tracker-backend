@@ -6,8 +6,13 @@ const {
   removeFavorite
 } = require("./favorite.service");
 
+const buildRequestMeta = (req) => ({
+  ipAddress: req.ip || "",
+  userAgent: req.get("user-agent") || ""
+});
+
 const add = asyncHandler(async (req, res) => {
-  const result = await addFavorite(req.body, req.user);
+  const result = await addFavorite(req.body, req.user, buildRequestMeta(req));
 
   return res
     .status(201)
@@ -23,7 +28,12 @@ const getMine = asyncHandler(async (req, res) => {
 });
 
 const remove = asyncHandler(async (req, res) => {
-  const result = await removeFavorite(req.params.id, req.user.id);
+  const result = await removeFavorite(
+    req.params.id,
+    req.user.id,
+    buildRequestMeta(req),
+    req.user.role
+  );
 
   return res
     .status(200)

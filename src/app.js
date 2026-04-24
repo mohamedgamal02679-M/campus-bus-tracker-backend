@@ -10,6 +10,7 @@ const stopRoutes = require("./modules/stops/stop.routes");
 const scheduleRoutes = require("./modules/schedules/schedule.routes");
 const favoriteRoutes = require("./modules/favorites/favorite.routes");
 const planningRoutes = require("./modules/planning/planning.routes");
+const operationLogRoutes = require("./modules/operation-logs/operationLog.routes");
 
 const notFoundMiddleware = require("./middlewares/notFound.middleware");
 const errorMiddleware = require("./middlewares/error.middleware");
@@ -43,6 +44,7 @@ app.use("/api/stops", stopRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/favorites", favoriteRoutes);
 app.use("/api/planning", planningRoutes);
+app.use("/api/operation-logs", operationLogRoutes);
 
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);

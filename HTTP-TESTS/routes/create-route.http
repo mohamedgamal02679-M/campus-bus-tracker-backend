@@ -1,18 +1,17 @@
 @baseUrl = http://localhost:5000
 @adminToken = admin_token
 
-
 ### Create Route
 POST {{baseUrl}}/api/routes
 Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "name": "Main Campus Shuttle",
-  "code": "MCS-01",
-  "startLocationName": "Gate 1",
-  "endLocationName": "Main Library",
-  "description": "Daily shuttle route from Gate 1 to Main Library",
+  "name": "Madinaty",
+  "code": "MCS-11",
+  "startLocationName": "Gate 3",
+  "endLocationName": " Library",
+  "description": "Daily shuttle route from Gate 3 to Madinaty",
   "estimatedDurationMinutes": 20,
   "isActive": true
 }
