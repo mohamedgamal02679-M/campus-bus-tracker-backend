@@ -1,14 +1,14 @@
 @baseUrl = http://localhost:5000
-@adminToken = Admin_Token
+@adminToken = admin_token
 
-### Create General Announcement
+### Create General Announcement And Send Email
 POST {{baseUrl}}/api/announcements
 Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "title": "Morning Shuttle Delay",
-  "message": "The morning shuttle may be delayed by 10 minutes due to traffic.",
+  "title": "Morning Shuttle Delay Test 2",
+  "message": "Testing email after unblocking recipient.",
   "priority": "high",
   "scope": "general",
   "isActive": true

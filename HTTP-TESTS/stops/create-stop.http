@@ -2,20 +2,17 @@
 @adminToken = admin_token
 @routeId = route_id
 
-### Create Stop
+### Create Stop With Nominatim
 POST {{baseUrl}}/api/stops
 Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "name": "Gate 2",
-  "code": "MLS-2",
+  "name": "Main Library Stop",
+  "code": "MLS-07",
   "route": "{{routeId}}",
-  "order": 2,
-  "locationName": "Gate 2",
-  "address": "BUE Gate 2, El Shorouk",
-  "latitude": 30.123456,
-  "longitude": 31.654321,
-  "displayAddress": "Gate 2, The British University in Egypt, El Shorouk, Cairo",
+  "order": 5,
+  "locationName": "Gate 1",
+  "address": "The British University in Egypt, El Shorouk, Cairo, Egypt",
   "isActive": true
 }
