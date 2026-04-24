@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:5000
+@userToken = user_token
+
+@fromStopId = stop1_id
+
+@toStopId = stop2_id
+
+### Plan Trip
+POST {{baseUrl}}/api/planning/trip
+Content-Type: application/json
+Authorization: Bearer {{userToken}}
+
+{
+  "fromStop": "{{fromStopId}}",
+  "toStop": "{{toStopId}}",
+  "dayOfWeek": "sunday",
+  "currentTime": "08:00",
+  "scheduleType": "regular",
+  "seasonLabel": "default"
+}

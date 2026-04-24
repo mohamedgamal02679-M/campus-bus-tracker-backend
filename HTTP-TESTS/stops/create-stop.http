@@ -8,14 +8,14 @@ Content-Type: application/json
 Authorization: Bearer {{adminToken}}
 
 {
-  "name": "Main Library Stop",
-  "code": "MLS-01",
+  "name": "Gate 2",
+  "code": "MLS-2",
   "route": "{{routeId}}",
-  "order": 1,
-  "locationName": "Main Library",
-  "address": "BUE Main Library, El Shorouk",
+  "order": 2,
+  "locationName": "Gate 2",
+  "address": "BUE Gate 2, El Shorouk",
   "latitude": 30.123456,
   "longitude": 31.654321,
-  "displayAddress": "Main Library, The British University in Egypt, El Shorouk, Cairo",
+  "displayAddress": "Gate 2, The British University in Egypt, El Shorouk, Cairo",
   "isActive": true
 }
